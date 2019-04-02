@@ -1,0 +1,51 @@
+---
+title: "Lake Photic Zone Temperature accross the Conterminous United States"
+author:
+- Kreakie, B. J. ^\*^ ^*1*^, Milstead, W. Bryan. ^*1*^, Hollister. J. W. ^*1*^, Shivers,
+  S. ^*2*^, 
+- ^*1*^ US Environmental Protection Agency, Office Of Research and Development, Atlantic
+  Ecology Division, Narragansett, RI 02882
+- ^*2*^ ORISE, Narragansett, RI 02882
+- '^\*^  *corresponding author: kreakie.betty@epa.gov*'
+
+bibliography: manuscript.bib
+output:
+  word_document:
+    reference_docx: manuscript_template.docx
+editor_options:
+  chunk_output_type: inline
+csl: plos.csl
+
+abstract: Text for abstract
+
+---
+
+
+```{r setup, include=FALSE}
+source(here::here("R/functions.R"), encoding = "UTF-8")
+opts_chunk$set(echo = TRUE, fig.width=6, fig.height=5)
+tab_num <- captioner(prefix = "Table")
+fig_num <- captioner(prefix = "Figure")
+options(scipen = 2, digits = 5)
+```
+
+```{r analysis, include=FALSE}
+#got to figure out path stuff before render.
+source(here::here("R/data_available.R"), encoding = "UTF-8") 
+source(here::here("R/summary_stats.R"), encoding = "UTF-8")  
+source(here::here("R/figures.R"), encoding = "UTF-8")
+```
+
+# Introduction
+
+# Methods
+
+# Results
+
+# Discussion and conclusions
+
+
+# Bibliography
+
+
+
