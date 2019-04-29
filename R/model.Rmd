@@ -130,6 +130,8 @@ RFAll
 varImpPlot(RFAll)
 
 
+pre.var<-c(4,6,8:25)
+play.rf<-randomForest(nla.cc[,pre.var],nla.cc[,7],ntree=10000,            importance=TRUE,proximity=TRUE,na.action=na.omit)
 
 ```
 
