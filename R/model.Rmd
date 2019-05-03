@@ -40,41 +40,46 @@ nla.cc$date <- lubridate::yday(lubridate::ymd(nla.cc$date))
 
 
 
-data07 <- filter(nla.cc, year == 2007, tmean_2m < 70) %>%
-            dplyr::select(tmean_2m, date, longitude, latitude, tmean, tmean_dm1,
-            tmean_avg3, tmean_avg7, tmean_avg30, percent_impervious, surface_area,
-            shoreline_length, shoreline_dev, max_length, max_width, mean_width,
-            max_depth, max_depth, volume, elevation)
-            
-            
-data12 <- filter(nla.cc, year == 2012, tmean_2m < 70) %>%
-            dplyr::select(tmean_2m, date, longitude, latitude, tmean, tmean_dm1,
-            tmean_avg3, tmean_avg7, tmean_avg30, percent_impervious, surface_area,
-            shoreline_length, shoreline_dev, max_length, max_width, mean_width,
-            max_depth, max_depth, volume, elevation)
+# data07 <- filter(nla.cc, year == 2007, tmean_2m < 70) %>%
+#             dplyr::select(tmean_2m, date, longitude, latitude, tmean, tmean_dm1,
+#             tmean_avg3, tmean_avg7, tmean_avg30, percent_impervious, surface_area,
+#             shoreline_length, shoreline_dev, max_length, max_width, mean_width,
+#             max_depth, max_depth, volume, elevation)
+#             
+#             
+# data12 <- filter(nla.cc, year == 2012, tmean_2m < 70) %>%
+#             dplyr::select(tmean_2m, date, longitude, latitude, tmean, tmean_dm1,
+#             tmean_avg3, tmean_avg7, tmean_avg30, percent_impervious, surface_area,
+#             shoreline_length, shoreline_dev, max_length, max_width, mean_width,
+#             max_depth, max_depth, volume, elevation)
+
 
 
 nla.all <-  filter(nla.cc, tmean_2m < 70) %>%
-  dplyr::select(tmean_2m, year,date, longitude, latitude, tmean,          tmean_avg30,percent_impervious,surface_area,shoreline_length, shoreline_dev, max_length, max_width, mean_width, max_depth, max_depth, volume, elevation)
+              dplyr::select(tmean_2m, year,date, longitude, latitude, tmean,
+              tmean_avg30,percent_impervious,surface_area,shoreline_length,
+              shoreline_dev, max_length, max_width, mean_width, max_depth,
+              max_depth, volume, elevation)
 
 
 ##variable selection for 2007-only model
-var_sel_tmean07 <- varsel_regression_rf(data07$tmean_2m, select(data07, -tmean_2m), ntree=1000, prog=TRUE, importance=TRUE)
-
-varsel_plot(var_sel_tmean07) 
-
-var_sel_tmean07$vars[[9]]
-
-
-##Variable selection for 2012-only model
-var_sel_tmean12 <- varsel_regression_rf(data12$tmean_2m, select(data12, -tmean_2m),                ntree=1000, prog=TRUE,importance=TRUE)
-
-varsel_plot(var_sel_tmean12) #9 variables
-
-var_sel_tmean12$vars[[9]]
+# var_sel_tmean07 <- varsel_regression_rf(data07$tmean_2m, select(data07, -tmean_2m), ntree=1000, prog=TRUE, importance=TRUE)
+# 
+# varsel_plot(var_sel_tmean07) 
+# 
+# var_sel_tmean07$vars[[9]]
+# 
+# 
+# ##Variable selection for 2012-only model
+# var_sel_tmean12 <- varsel_regression_rf(data12$tmean_2m, select(data12, -tmean_2m),                ntree=1000, prog=TRUE,importance=TRUE)
+# 
+# varsel_plot(var_sel_tmean12) #9 variables
+# 
+# var_sel_tmean12$vars[[9]]
 
 
 ##Variable selection for 2007&2012 model
+set.seed(42)
 var_sel_tmean <- varsel_regression_rf(nla.all$tmean_2m, select(nla.all, -tmean_2m),                ntree=1000, prog=TRUE, importance=TRUE)
 
 varsel_plot(var_sel_tmean) #7 variables
@@ -95,42 +100,43 @@ var_sel_tmean$vars[[7]]
 
 # Using tmean made most sense and perfomed better that tmin and tmax based models.
 
-RF2007 <- data07 %>%
+# RF2007 <- data07 %>%
+# 
+#   select(tmean_2m,var_sel_tmean07$vars[[9]]) %>%
+# 
+#   randomForest(tmean_2m ~ ., data = ., importance = TRUE, 
+# 
+#                ntree = 10000)
+# 
+# 
+# 
+# RF2007
+# 
+# varImpPlot(RF2007)
+# 
+# 
+# 
+# RF2012 <- data12 %>%
+# 
+#   select(tmean_2m,var_sel_tmean12$vars[[9]]) %>%
+# 
+#   randomForest(tmean_2m ~ ., data = ., importance = TRUE, 
+# 
+#                ntree = 10000)
+# 
+# 
+# 
+# RF2012
+# 
+# varImpPlot(RF2012)
+# 
 
-  select(tmean_2m,var_sel_tmean07$vars[[9]]) %>%
-
-  randomForest(tmean_2m ~ ., data = ., importance = TRUE, 
-
-               ntree = 10000)
-
-
-
-RF2007
-
-varImpPlot(RF2007)
-
-
-
-RF2012 <- data12 %>%
-
-  select(tmean_2m,var_sel_tmean12$vars[[9]]) %>%
-
-  randomForest(tmean_2m ~ ., data = ., importance = TRUE, 
-
-               ntree = 10000)
-
-
-
-RF2012
-
-varImpPlot(RF2012)
-
-
+set.seed(42)
 RFAll <- nla.all %>%
 
   select(tmean_2m,var_sel_tmean$vars[[7]]) %>%
 
-  randomForest(tmean_2m ~ ., data = ., importance = TRUE, 
+  randomForest(tmean_2m ~ ., data = ., importance = TRUE,
 
                ntree = 10000)
 
