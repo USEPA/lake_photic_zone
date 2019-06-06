@@ -77,7 +77,7 @@ Random forest modelling was used to not only develop a predictive model of photi
 # Results
 
 
-
+![`r fig_num("varsel_fig",caption="Variable selection plot for all variables. Shows percent increase in mean‐squared error as a function of the number of variables.")`](../figures/varselfig.jpg)
 
 
 # Discussion and conclusions
