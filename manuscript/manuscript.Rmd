@@ -22,12 +22,17 @@ abstract: Text for abstract
 
 
 ```{r setup, include=FALSE, eval=FALSE}
-source(here::here("R/functions.R"), encoding = "UTF-8")
-opts_chunk$set(echo = TRUE, fig.width=6, fig.height=5)
+# source(here::here("R/functions.R"), encoding = "UTF-8")
+library(captioner)
+#opts_chunk$set(echo = TRUE, fig.width=6, fig.height=5)
 tab_num <- captioner(prefix = "Table")
 fig_num <- captioner(prefix = "Figure")
 options(scipen = 2, digits = 5)
+
+
 ```
+
+
 
 ```{r analysis, include=FALSE, eval=FALSE}
 #got to figure out path stuff before render.
