@@ -76,10 +76,17 @@ To test the relative influence of both short and long-term temperature, we deriv
 
 ##Random Forest Modelling 
 
-Random forest modelling was used to not only develop a predictive model of photic zone temperature, but also used as a means of variable selection and measure of relative variable importance.  Random forest modelling is a machine learning method that builds a consensus prediction from the assemblage of multiple tree models (here specifically 10,000 trees).  Each individual tree model is constructed from a subset of the full data set and a subset of all predictor variables.  All random forest modelling was conducted in R v XXXX (CITE) with the randomForest package (CITE).  Model performance is reported as mean square error and adjusted R.  Additionally, we used percent increase of mean-squared error to assess variable importance.  The percent increase in mean-squared error is a comparison between the true values of a variable and randomly permuted values of a specific variable.  
+Random forest modelling was used to not only develop a predictive model of photic zone temperature, but also used as a means of variable selection and calculate relative variable importance.  Random forest is a machine learning method that builds a consensus prediction from the assemblage of multiple tree models (here specifically 10,000 trees for the final model and 1,000 trees for the variable selection models).  Each individual tree model is constructed from a subset of the full data set and a subset of all predictor variables.  All random forest modelling was conducted in R v XXXX (CITE) with the randomForest package (CITE).  Model performance is reported as mean square error and adjusted R.  
+
+Random forest does not require that users reduce the number of predictor variables; the random forest algorithm prevents overfitting and is not impacted by correlated predictor variables (Culter 2007).  While it is unlikely that random forest models constructed with reduced numbers of predictor variables perform any better than models constructed with a full suite of available variables(Fox et al., 2017), reducing the number of our predictor variables was necessary in order to fulfill the long-term goals of this work.  Several of our climatic predictor variables are computationally intensive to create for the entire conterminous United States.  In order to use our final model for future forecasting or historical backcasting, we strove to create a robust predictive model while minimizing computational demands.  To determine the optimal number and set of variables, we followed the variable selection method presented in (Hollister 2016).
+
+In addition to measure of overall model performance, we used percent increase of mean-squared error to assess variable importance.  The percent increase in mean-squared error is a comparison between the true values of a variable and randomly permuted values of a specific variable on overall model performance.  
+  
 
 
 # Results
+
+We used 1185 data points from the 2007 NLA and 1097 from 2012 NLA.  Figure 1 illustrates the spatial distribution of the sampled lakes.
 
 
 ![`r fig_num("varsel_fig",caption="Variable selection plot for all variables. Shows percent increase in mean‐squared error as a function of the number of variables.")`](../figures/varselfig.jpg)
