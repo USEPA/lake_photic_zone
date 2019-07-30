@@ -147,6 +147,10 @@ RFAll
 varImpPlot(RFAll)
 
 
+###Partial Dependence Plots 
+
+partialPlot(RFAll, nla.all,date)
+
 # B: I'm saving a copy of the model for later use.  It is too big to github so i added it to .gitignore
 saveRDS(RFAll, here::here('data/RFAll20190503.Rds'))
 ```
@@ -155,19 +159,6 @@ saveRDS(RFAll, here::here('data/RFAll20190503.Rds'))
 
 
 
-mean_run <- nla.cc %>%
-
-  select(tmean_2m,var_sel_tmean$vars[[9]]) %>%
-
-  randomForest(tmean_2m ~ ., data = ., importance = TRUE, 
-
-               ntree = 1000)
-
-
-
-mean_run
-
-varImpPlot(mean_run)
 
 ```
 
