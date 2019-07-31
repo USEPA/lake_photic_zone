@@ -21,15 +21,13 @@ abstract: Text for abstract
 ---
 
 
-```{r setup, include=FALSE, eval=FALSE}
+```{r setup, include=FALSE, eval=TRUE}
 # source(here::here("R/functions.R"), encoding = "UTF-8")
 library(captioner)
 #opts_chunk$set(echo = TRUE, fig.width=6, fig.height=5)
 tab_num <- captioner(prefix = "Table")
 fig_num <- captioner(prefix = "Figure")
 options(scipen = 2, digits = 5)
-
-
 ```
 
 
@@ -74,7 +72,7 @@ As a proxy for directly measured ambient air temperature, we used the PRISM AN81
 
 To test the relative influence of both short and long-term temperature, we derived several measures for a lake’s local air temperature.  Mean air temperatures for day of and the day before the sample date were extracted directly from the prism data.  To understand longer term influences we calculated average mean air temperatures for periods 3, 7, and 30 days prior to the sample date.
 
-##Random Forest Modelling 
+## Random Forest Modelling 
 
 Random forest modelling was used to not only develop a predictive model of photic zone temperature, but also used as a means of variable selection and calculate relative variable importance.  Random forest is a machine learning method that builds a consensus prediction from the assemblage of multiple tree models (here specifically 10,000 trees for the final model and 1,000 trees for the variable selection models).  Each individual tree model is constructed from a subset of the full data set and a subset of all predictor variables.  All random forest modelling was conducted in R v XXXX (CITE) with the randomForest package (CITE).  Model performance is reported as mean square error and adjusted R.  
 
@@ -90,9 +88,9 @@ We used 1185 data points from the 2007 NLA and 1097 from 2012 NLA.  Figure 1 ill
 
 Figure 1
 
-Using the average temperature for the upper two meters as the response variable, we initially began the variable selection process with 16 predictor variables.   The variable selection process identified a reduced model with 7 variables (Fig 2). The selected variables were the average ambient air temperature for the sample date, sample date, longitude, average ambient air temperature for 30 day proceeding the sample date, elevation, latitude, length of lake shoreline, and the lake surface area. 
+Using the average temperature for the upper two meters as the response variable, we initially began the variable selection process with 16 predictor variables.   The variable selection process identified a reduced model with 7 variables (`r fig_num("varsel_fig",caption="Variable selection plot for all variables. Shows percent increase in mean‐squared error as a function of the number of variables.", display = "cite")`). The selected variables were the average ambient air temperature for the sample date, sample date, longitude, average ambient air temperature for 30 day proceeding the sample date, elevation, latitude, length of lake shoreline, and the lake surface area. 
 
-![`r fig_num("varsel_fig",caption="Variable selection plot for all variables. Shows percent increase in mean‐squared error as a function of the number of variables.")`](../figures/varselfig.jpg)
+![`r fig_num("varsel_fig")`](../figures/valselfig.jpg)
 
 
 The final model built with the eight selected variables has a mean-squared error of 2.19 and adjusted R^2 of 0.88.  The variables ranked in order of importance were date, average temperature, longitude, 30-day average temperature, elevation, latitude, surface area, and shoreline length (Figure 3).  The partial dependency plots illustrate how the predicted photic zone temperature changes over the range of values for all predictor variables (Figure 4).
