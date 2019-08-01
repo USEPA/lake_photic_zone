@@ -158,7 +158,7 @@ varImpPlot(RFAll,type=1)
 
 
 # B: I'm saving a copy of the model for later use.  It is too big to github so i added it to .gitignore
-saveRDS(RFAll, here::here('data/RFAll20190503.Rds'))
+saveRDS(RFAll, "L:/Public/Milstead_Lakes/prism/RFAll20190503.Rds")
 ```
 
 
