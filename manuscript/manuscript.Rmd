@@ -90,10 +90,16 @@ Figure 1
 
 Using the average temperature for the upper two meters as the response variable, we initially began the variable selection process with 16 predictor variables.   The variable selection process identified a reduced model with 7 variables (`r fig_num("varsel_fig",caption="Variable selection plot for all variables. Shows percent increase in mean‐squared error as a function of the number of variables.", display = "cite")`). The selected variables were the average ambient air temperature for the sample date, sample date, longitude, average ambient air temperature for 30 day proceeding the sample date, elevation, latitude, length of lake shoreline, and the lake surface area. 
 
-![`r fig_num("varsel_fig")`](../figures/valselfig.jpg)
+![`r fig_num("varsel_fig")`](../figures/varselfig.jpg)
 
 
-The final model built with the eight selected variables has a mean-squared error of 2.19 and adjusted R^2 of 0.88.  The variables ranked in order of importance were date, average temperature, longitude, 30-day average temperature, elevation, latitude, surface area, and shoreline length (Figure 3).  The partial dependency plots illustrate how the predicted photic zone temperature changes over the range of values for all predictor variables (Figure 4).
+The final model built with the eight selected variables has a mean-squared error of 2.19 and adjusted R^2 of 0.88.  The variables ranked in order of importance were date, average temperature, longitude, 30-day average temperature, elevation, latitude, surface area, and shoreline length (`r fig_num("varImpPlot",caption="Variable selection plot for all variables. Shows percent increase in mean‐squared error as a function of the number of variables.", display = "cite")`).  The partial dependency plots illustrate how the predicted photic zone temperature changes over the range of values for all predictor variables (`r fig_num("partPlot",caption="Variable selection plot for all variables. Shows percent increase in mean‐squared error as a function of the number of variables.", display = "cite")`).
+
+![`r fig_num("varImpPlot")`](../figures/varImpPlot.jpg)
+
+
+![`r fig_num("partPlot")`](../figures/partPlot.jpg)
+
 
 # Discussion and conclusions
 

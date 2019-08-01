@@ -62,6 +62,12 @@ nla.all <-  filter(nla.cc, tmean_2m < 70) %>%
               max_depth, volume, elevation)
 
 
+
+nla.all<-rename(nla.all,Date=date,Average.Temperature=tmean,Longitude=longitude,
+                 Thirty.Day.Average.Temperature=tmean_avg30,Elevation=elevation,
+                 Latitude=latitude,Surface.Area=surface_area,
+                 Shoreline.Length=shoreline_length)
+
 ##variable selection for 2007-only model
 # var_sel_tmean07 <- varsel_regression_rf(data07$tmean_2m, select(data07, -tmean_2m), ntree=1000, prog=TRUE, importance=TRUE)
 # 
@@ -131,6 +137,9 @@ var_sel_tmean$vars[[7]]
 # varImpPlot(RF2012)
 # 
 
+
+
+
 set.seed(42)
 RFAll <- nla.all %>%
 
@@ -144,12 +153,9 @@ RFAll <- nla.all %>%
 
 RFAll
 
-varImpPlot(RFAll)
+varImpPlot(RFAll,type=1)
 
 
-###Partial Dependence Plots 
-
-partialPlot(RFAll, nla.all,date)
 
 # B: I'm saving a copy of the model for later use.  It is too big to github so i added it to .gitignore
 saveRDS(RFAll, here::here('data/RFAll20190503.Rds'))
