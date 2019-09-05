@@ -49,7 +49,7 @@ In summary, we still lack the ability to robustly model near-surface temperature
 
 The presented modelling effort uses the US Environmental Protection Agency’s (EPA’s) National Lake Assessment (NLA).  The NLA is a stratified random sample of all lakes in the conterminous United States repeated every five years beginning in 2007.  Even though this is a large effort involving numerous agencies, the sampling methods are standardized and have a comprehensive quality assurance plan.  The uniqueness of this data set allows us to build a robust lake photic zone temperature model for all US lakes.  By using lakes across the US (i.e. at a large spatial extent), we included lakes with different morphologies, in different climates with diverse geologies, and surrounding landscapes.  Additionally, small lakes were well represented with more than 50% of the lakes in the 2012 survey less than 0.5 km2. 
 
-In summary, the main goal of this work was to develop a simple yet robust lake photic temperature model for all lakes in the conterminous US while still capturing key drivers of near-surface lake temperature. Additionally, this work (something about open science and GitHub link).
+To summarize, the main goal of this work was to develop a simple yet robust lake photic temperature model for all lakes in the conterminous US that capture key drivers of near-surface lake temperature. Additionally, this work (something about open science and GitHub link).
 
 
 
