@@ -32,10 +32,10 @@ options(scipen = 2, digits = 5)
 
 
 
-```{r analysis, include=FALSE, eval=FALSE}
-#got to figure out path stuff before render.
-source(here::here("R/data_available.R"), encoding = "UTF-8") 
-source(here::here("R/summary_stats.R"), encoding = "UTF-8")  
+```{r model, include=FALSE, eval=TRUE, cache = TRUE}
+source(here::here("R/model.R"), encoding = "UTF-8")
+```
+```{r figures, include=FALSE}
 source(here::here("R/figures.R"), encoding = "UTF-8")
 ```
 
@@ -61,7 +61,7 @@ We relied on the in situ temperature data provided in the US EPA’s National La
 
 Figure 1: Map of 2007 and 2012 US EPA’s National Lake Assessment (NLA) Lakes
 
-In addition to climate, there are additional factors clearly impacting lake temperature (e.g., surrounding land use, lake depth, size, and configuration, and elevation).   To test for the relative importance of lake morphometry and surrounding landscape, we used the R packages lmorpho and elevatr (CITE) as means to incorporate these types of data. Additionally, National Land Cover Database (NLCD) was our source for landcover data.  Specifically, we calculated the percent impervious surface of a 3000m buffer for each lake.  Lakes with partials buffers falling outside the US were excluded.
+In addition to climate, there are additional factors clearly impacting lake temperature (e.g., surrounding land use, lake depth, size, and configuration, and elevation).   To test for the relative importance of lake morphometry and surrounding landscape, we used the R packages `lakemorpho` to calculate a suite of lake morphometry metric and `elevatr` to access digital elevation models for each lake [@hollister2017lakemorpho; @hollister2017elevatr]. Additionally, National Land Cover Database (NLCD) was our source for landcover data.  Specifically, we calculated the percent impervious surface of a 3000m buffer for each lake.  Lakes with partials buffers falling outside the US were excluded.
 
 As a proxy for directly measured ambient air temperature, we used the PRISM AN81d dataset (PRISM Climate Group, Oregon State University, http://prism.oregonstate.edu, created 07 Nov 2018).  This dataset provides interpolated daily temperature estimates (mean, maximum, and minimum) for 4km grids in the conterminous United States for 1981 to the present (see: http://www.prism.oregonstate.edu/documents/PRISM_datasets.pdf).  PRISM takes advantage of measured climate variables to interpolate point data to spatially defined grids using regression techniques and expert knowledge (Daly et al 2008).  For our study, we used the “prism” R package (Hart & Bell) to download the mean daily temperatures for the PRISM grid cells corresponding to the centroids of all NLA lakes included in this study for dates between 01 May and 30 September of 2007 and 2012.
 

@@ -1,7 +1,12 @@
 #' script to generate figures
-#' load up functions and packages
 #' 
-source(here::here("R/functions.R"))
+source(here::here("R/varsel_plot.R"))
+source(here::here("R/varimp_plot.R"))
+source(here::here("R/partial_plot.R"))
+
+extrafont::loadfonts(device="win")
+library(ggplot2)
+library(hrbrthemes)
 
 ###Variable selection figure 
 varsel_fig<-varsel_plot(var_sel_tmean)
