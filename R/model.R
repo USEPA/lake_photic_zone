@@ -30,16 +30,13 @@ nla.all<-rename(nla.all,Date=date,Average.Temperature=tmean,Longitude=longitude,
 set.seed(42)
 var_sel_tmean <- varsel_regression_rf(nla.all$tmean_2m, select(nla.all, -tmean_2m),                ntree=1000, prog=TRUE, importance=TRUE)
 
+
+nla_select <- select(nla.all, tmean_2m,var_sel_tmean$vars[[7]])
 set.seed(42)
-RFAll <- nla.all %>%
-
-  select(tmean_2m,var_sel_tmean$vars[[7]]) %>%
-
-  randomForest(tmean_2m ~ ., data = ., importance = TRUE,
-
+RFAll <- randomForest(tmean_2m ~ ., data = nla_select, importance = TRUE,
                ntree = 10000)
 
-
+## Calculate partial dependencies
 
 
 

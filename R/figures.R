@@ -10,16 +10,18 @@ library(hrbrthemes)
 
 ###Variable selection figure 
 varsel_fig<-varsel_plot(var_sel_tmean)
-varsel_fig
-ggsave(here::here("figures/varSelFig.jpg"), varsel_fig, width = 7.5, height = 5.625, 
-       units = "in", dpi = 600)
+ggsave(here::here("figures/varSelFig.jpg"), varsel_fig, width = 7.5, 
+       height = 5.625, units = "in", dpi = 600)
 
 
 ###Variable importance figure
-
-jpeg("figures/varImpPlot.jpg")
-varImpPlot(RFAll,type=1,main="")
-dev.off()
+variable_names <- c("Avg. temperature", "Date", "Longitude", 
+                    "30-day avg. temperature", "Elevation", "Latitude", 
+                    "Lake shoreline length", "Lake area")
+varimp_fig <- varimp_plot(RFAll, variable_names)
+varimp_fig
+ggsave(here::here("figures/varImpPlot.jpg"), varimp_fig, width = 7.5, 
+       height = 5.625, units = "in", dpi = 600)
 
 
 
