@@ -8,13 +8,11 @@
 varsel_plot <- function(vs_reg_obj){
   dat <- data.frame(num = vs_reg_obj$num_var, mse = vs_reg_obj$mse)
   #browser()
-  suppressWarnings({
   plot_out<-ggplot(dat, aes(x=num,y=mse)) +
-    geom_point(size=2.5) +
-    theme_ipsum() +
+    geom_point(size = 3) +
+    theme_ipsum_rc(base_size = 12, axis_title_size = 12) +
     labs(x="Number of variables in model", y="Root Mean Square Error")
   plot_out
-  })
 }
 
 

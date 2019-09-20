@@ -4,13 +4,13 @@ source(here::here("R/varsel_plot.R"))
 source(here::here("R/varimp_plot.R"))
 source(here::here("R/partial_plot.R"))
 
-extrafont::loadfonts(device="win")
+#extrafont::loadfonts(device="win")
 library(ggplot2)
 library(hrbrthemes)
 
 ###Variable selection figure 
 varsel_fig<-varsel_plot(var_sel_tmean)
-
+varsel_fig
 ggsave(here::here("figures/varSelFig.jpg"), varsel_fig, width = 7.5, height = 5.625, 
        units = "in", dpi = 600)
 

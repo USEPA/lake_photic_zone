@@ -30,8 +30,6 @@ nla.all<-rename(nla.all,Date=date,Average.Temperature=tmean,Longitude=longitude,
 set.seed(42)
 var_sel_tmean <- varsel_regression_rf(nla.all$tmean_2m, select(nla.all, -tmean_2m),                ntree=1000, prog=TRUE, importance=TRUE)
 
-var_sel_tmean$vars[[7]]
-
 set.seed(42)
 RFAll <- nla.all %>%
 
