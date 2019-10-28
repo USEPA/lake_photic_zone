@@ -26,18 +26,15 @@ ggsave(here::here("figures/varImpPlot.jpg"), varimp_fig, width = 7.5,
 
 
 ###Partial Dependence Plots 
-jpeg("figures/partPlot.jpg")
-par(mfrow=c(4,2))
+partplot_avg_temp <- partialPlot(RFAll, nla.all, Average.Temperature, plot = FALSE)
+partplot_long <- partialPlot(RFAll, nla.all,Longitude, plot = FALSE)
+partplot_thirty_day <- partialPlot(RFAll, nla.all,Thirty.Day.Average.Temperature, plot = FALSE)
+partplot_elev <- partialPlot(RFAll, nla.all,Elevation, plot = FALSE)
+partplot_lat <- partialPlot(RFAll, nla.all,Latitude, plot = FALSE)
+partplot_surf_area <- partialPlot(RFAll, nla.all,Surface.Area, plot = FALSE)
+partplot_shoreline_leng <- partialPlot(RFAll, nla.all,Shoreline.Length, plot = FALSE)
 
-partialPlot(RFAll, nla.all,Date,main="")
-partialPlot(RFAll, nla.all,Average.Temperature,main="")
-partialPlot(RFAll, nla.all,Longitude,main="")
-partialPlot(RFAll, nla.all,Thirty.Day.Average.Temperature,main="")
-partialPlot(RFAll, nla.all,Elevation,main="")
-partialPlot(RFAll, nla.all,Latitude,main="")
-partialPlot(RFAll, nla.all,Surface.Area,main="")
-partialPlot(RFAll, nla.all,Shoreline.Length,main="")
-dev.off()
+
 
 
 

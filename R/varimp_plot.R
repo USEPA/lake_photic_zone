@@ -19,9 +19,9 @@ varimp_plot <- function(rfobj, var_names = NULL){
     labs(x = "Independent variables", 
          y = "Percent increase mean square error") +
     theme_ipsum_rc(base_size = 12, axis_title_size = 12) +
-    theme(axis.title.y = element_text(margin = margin(t = 0, r = 0.3, b = 0, 
+    theme(axis.title.y = element_text(margin = ggplot2::margin(t = 0, r = 0.3, b = 0, 
                                                       l = 0, "cm")),
-          axis.title.x = element_text(margin = margin(t = 0.3, r = 0, b = 0, 
+          axis.title.x = element_text(margin = ggplot2::margin(t = 0.3, r = 0, b = 0, 
                                                       l = 0, "cm")))
   plot_out
 }
