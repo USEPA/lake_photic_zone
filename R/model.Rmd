@@ -3,6 +3,8 @@ title: "Untitled"
 author: "Betty Kreakie"
 date: "April 25, 2019"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 
