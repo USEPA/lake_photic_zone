@@ -6,8 +6,8 @@
 #' @export
 #' @import ggplot2
 varsel_plot <- function(vs_reg_obj){
-  dat <- data.frame(num = vs_reg_obj$num_var, mse = vs_reg_obj$mse)
-  #browser()
+  dat <- data.frame(num = unlist(vs_reg_obj$num_var), mse = unlist(vs_reg_obj$mse))
+  
   plot_out<-ggplot(dat, aes(x=num,y=mse)) +
     geom_point(size = 3) +
     theme_ipsum_rc(base_size = 12, axis_title_size = 12) +

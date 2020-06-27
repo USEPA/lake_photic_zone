@@ -3,7 +3,7 @@
 source(here::here("R/varsel_plot.R"))
 source(here::here("R/varimp_plot.R"))
 source(here::here("R/partial_plot.R"))
-source(here::here("R/model.R"))
+#source(here::here("R/model.R"))
 
 #extrafont::loadfonts(device="win")
 library(ggplot2)
@@ -12,7 +12,7 @@ library(readr)
 
 ###Variable selection figure 
 varsel_fig<-varsel_plot(var_sel_tmean)
-varsel_fig
+#varsel_fig
 ggsave(here::here("figures/varSelFig.jpg"), varsel_fig, width = 7.5, 
        height = 5.625, units = "in", dpi = 600)
 
@@ -22,7 +22,7 @@ variable_names <- c("Avg. temperature", "Date", "Longitude",
                     "30-day avg. temperature", "Elevation", "Latitude", 
                     "Lake shoreline length", "Lake area")
 varimp_fig <- varimp_plot(RFAll, variable_names)
-varimp_fig
+#varimp_fig
 ggsave(here::here("figures/varImpPlot.jpg"), varimp_fig, width = 7.5, 
        height = 5.625, units = "in", dpi = 600)
 
@@ -57,7 +57,7 @@ pp_shoreline_length <- data.frame(partplot_shoreline_leng,
                                   stringsAsFactors = FALSE)
 pp_data <- rbind(pp_date, pp_avg_temp, pp_long, pp_thirty_day, pp_elev, pp_lat,
                  pp_surf_area, pp_shoreline_length)
-write_csv(pp_data, "figures/pp_data.csv")
+write_csv(pp_data, here::here("figures/pp_data.csv"))
 
 pp_data <- pp_data %>%
   mutate(variable = factor(variable, levels = c("Date", "Avg. temperature",
@@ -68,7 +68,7 @@ pp_data <- pp_data %>%
                                                 "Lake shoreline length")))
 
 pp_fig <- partial_plot(pp_data)
-pp_fig
+#pp_fig
 ggsave(here::here("figures/partPlot.jpg"), pp_fig, width = 8, 
        height = 10, units = "in", dpi = 300)
 
