@@ -1,22 +1,33 @@
 ---
 title: "Lake Photic Zone Temperature across the Conterminous United States"
 author:
-- Kreakie, B. J. ^\*^ ^*1*^,  Shivers, S. ^*2*^, Hollister. J. W. ^*1*^, Milstead, W. Bryan. ^*1*^,
-- ^*1*^ US Environmental Protection Agency, Office Of Research and Development, Atlantic
-  Ecology Division, Narragansett, RI 02882
+- Kreakie, B. J. ^\*^ ^*1*^,  Shivers, S. ^*2*^, Hollister. J. W. ^*1*^, Milstead,
+  W. Bryan. ^*1*^,
+- ^*1*^ US Environmental Protection Agency, Office of Research and Development,  Atlantic
+  Coastal Environmental Sciences Division (ACESD), Narragansett, RI 02882
 - ^*2*^ ORISE, Narragansett, RI 02882
 - '^\*^  *corresponding author: kreakie.betty@epa.gov*'
-
 bibliography: manuscript.bib
 output:
   word_document:
     reference_docx: manuscript_template.docx
+  pdf_document: default
 editor_options:
   chunk_output_type: inline
 csl: plos.csl
-
-abstract: Text for abstract
-
+abstract: As the average global air temperature on Earth increases, surface temperatures
+  of lakes are also increasing globally (0.34 °C per decade from 1985 to 2009).  The
+  influence of this increased temperature touches all biotic and abiotic components
+  of lentic ecosystems. Here we present a simple yet robust model of lake photic zone
+  temperature using the 2007 and 2012 US EPA’s National Lakes Assessment data for
+  the conterminous United States. The final model has a mean square error of 2.19
+  and an adjusted R(n<sup>2</sup>) of 0.88. The sampling date, that day’s average ambient air temperature,
+  data obtained from the PRISM Climate Group, and longitude are the most important
+  variables impacting the final model’s accuracy. Given the importance of temperature
+  to a lake ecosystem, especially to cyanobacteria bloom dynamics, this model can
+  be a valuable tool for researchers and lake resource managers. Daily predicted lake
+  photic zone temperature for all lakes in the conterminous US can now be straightforwardly
+  estimated based on basic ambient temperature and location information.
 ---
 
 
@@ -40,7 +51,7 @@ source(here::here("R/figures.R"), encoding = "UTF-8")
 
 # Introduction
 
-During a time of unprecedented variability, lakes can serve as sentinels and integrators in a changing world [@williamson2009lakes; @schindler2009lakes].  As the average global air temperature on Earth increases (0.15-0.20 °C per decade since 1975)[@hansen2010global], surface temperatures of lakes are also increasing globally (0.34 °C per decade from 1985 to 2009) [@o2015rapid].  The influence of this increased temperature touches all biotic and abiotic components of lentic ecosystems.  Ultimately, temperature changes will greatly impact every  aspects of lake resource management.  For example, temperature, in addition to nutrients, is a key driver to cyanobacteria bloom dynamics [@paerl2012climate].  During periods of higher temperature, cyanobacteria species dominate the phytoplankton community [@lurling2013comparison; @o2012rise; @peperzak2003climate].  As lake temperature increase (typically above 25°C), cyanobacteria have a competitive advantage over phytoplankton and can proliferate quickly [@paerl2008blooms].  Moreover, experimentally enhanced water temperatures yielded significantly increased growth rates of higher toxic Microcystis, but not the non-toxic strains [@davis2009effects].  Thus, our ability to understand and predict toxic cyanobacteria blooms will be deeply dependent on our ability to forecast lake photic zone temperature.   This need for accurate lake temperature forecasting will be crucial for protecting human and environmental health.
+During a time of unprecedented environmental and climatic variability, lakes can serve as sentinels and integrators in a changing world [@williamson2009lakes; @schindler2009lakes].  As the average global air temperature on Earth increases (0.15-0.20 °C per decade since 1975)[@hansen2010global], surface temperatures of lakes are also increasing globally (0.34 °C per decade from 1985 to 2009) [@o2015rapid].  The influence of this increased temperature touches all biotic and abiotic components of lentic ecosystems.  Ultimately, temperature changes will greatly impact every  aspects of lake resource management.  For example, temperature, in addition to nutrients, is a key driver to cyanobacteria bloom dynamics [@paerl2012climate].  During periods of higher temperature, cyanobacteria species dominate the phytoplankton community [@lurling2013comparison; @o2012rise; @peperzak2003climate].  As lake temperature increase (typically above 25°C), cyanobacteria have a competitive advantage over phytoplankton and can proliferate quickly [@paerl2008blooms].  Moreover, experimentally enhanced water temperatures yielded significantly increased growth rates of higher toxic Microcystis, but not the non-toxic strains [@davis2009effects].  Thus, our ability to understand and predict toxic cyanobacteria blooms will be deeply dependent on our ability to forecast lake photic zone temperature.   This need for accurate lake temperature forecasting will be crucial for protecting human and environmental health.
 
 Because to the ecological significance, it is not surprising that modelling near-surface lake temperature has been broadly investigated.  Models typically vary in number of lakes studied, complexity of modelling approach, and study interval.  Modelling efforts include efforts to model a single lake predicted over relatively small-time intervals (like hourly predictions).  Such studies include: [@saeed2016water; @peeters2002modeling; @zhong2016recent].  There are numerous studies that model temperature for a small number of lakes while attempting to limit the number of predictor variables [@matuszek1996empirical; @kettle2004empirical, @livingstone1998relationship; @piccolroaz2016prediction; @toffolon2014prediction].  By and large, air temperature and lake size are often the only selected predictor variables.  On the whole, very few modelling efforts attempt to predict lake temperature across large spatial extents for large number of lakes.  Yet some examples include: [@minns2017factors; @o2015rapid; @wan2017comprehensive].  Despite this great variation in approach and execution, most have been rather successful modelling lake photic zone temperature, although it is important to note that the majority of these lakes are large.  Considering that the number and importance of small lakes (< 1km2) has been historically underestimated, it is important to also predict temperatures in these small lakes [@downing2006global; @winslow2014lake].
 
@@ -56,19 +67,19 @@ To summarize, the main goal of this work was to develop a simple yet robust lake
 # Methods
 
 ##Data
-We relied on the in situ temperature data provided in the US EPA’s National Lake Assessment (NLA) (CITE).  The NLA is a stratified random sample of lakes (great than 1 ha) across the United States.  NLA sampling took place in 2007, 2012, and 2017.  This research effort used the 2007 and 2012 sample years.  The 2017 data are currently undergoing quality control before being released the public.   For both sample years, we have included over 1,000 lakes across the conterminous US excluding the Great Lakes (Figure 1).  For each sampled lake, we used the mean temperature for all sampled depths of less than 2m (this being the depth typically considered the photic zone).  
+We relied on the in situ temperature data provided in the US EPA’s National Lake Assessment (NLA) (CITE).  The NLA is a stratified random sample of lakes (great than 1 ha) across the United States.  NLA sampling took place in 2007, 2012, and 2017.  This research effort used the 2007 and 2012 sample years.  The 2017 data are currently undergoing quality control before being released the public.  Upon release, the data can easily be included to improve this model. For both sample years, we have included over 1,000 lakes across the conterminous US excluding the Great Lakes (Figure 1).  For each sampled lake, we used the mean temperature for all sampled depths of less than 2m (this being the depth typically considered the photic zone).  
 
 Figure 1: Map of 2007 and 2012 US EPA’s National Lake Assessment (NLA) Lakes
 
-In addition to climate, there are additional factors clearly impacting lake temperature (e.g., surrounding land use, lake depth, size, and configuration, and elevation).   To test for the relative importance of lake morphometry and surrounding landscape, we used the R packages `lakemorpho` to calculate a suite of lake morphometry metric and `elevatr` to access digital elevation models for each lake [@hollister2017lakemorpho; @hollister2017elevatr]. Additionally, National Land Cover Database (NLCD) was our source for landcover data.  Specifically, we calculated the percent impervious surface of a 3000m buffer for each lake.  Lakes with partials buffers falling outside the US were excluded.
-
 We included numerous predictor variables that are hypothesized to impact lake photic zone. As a proxy for directly measured ambient air temperature, we used the PRISM AN81d dataset (PRISM Climate Group, Oregon State University, http://prism.oregonstate.edu, created 07 Nov 2018).  This dataset provides interpolated daily temperature estimates (mean, maximum, and minimum) for 4km grids in the conterminous United States for 1981 to the present (see: http://www.prism.oregonstate.edu/documents/PRISM_datasets.pdf).  PRISM takes advantage of measured climate variables to interpolate point data to spatially defined grids using regression techniques and expert knowledge (Daly et al 2008).  For our study, we used the “prism” R package (Hart & Bell) to download the mean daily temperatures for the PRISM grid cells corresponding to the centroids of all NLA lakes included in this study for dates between 01 May and 30 September of 2007 and 2012.
+
+In addition to climate, there are additional factors clearly impacting lake temperature (e.g., surrounding land use, lake depth, size, and configuration, and elevation).   To test for the relative importance of lake morphometry and surrounding landscape, we used the R packages `lakemorpho` to calculate a suite of lake morphometry metric and `elevatr` to access digital elevation models for each lake [@hollister2017lakemorpho; @hollister2017elevatr]. Additionally, National Land Cover Database (NLCD) was our source for landcover data.  Specifically, we calculated the percent impervious surface of a 3000m buffer for each lake.  Lakes with partials buffers falling outside the US were excluded.
 
 To test the relative influence of both short and long-term temperature, we derived several measures for a lake’s local air temperature.  Mean air temperatures for day of and the day before the sample date were extracted directly from the prism data.  To understand longer term influences we calculated average mean air temperatures for periods 3, 7, and 30 days prior to the sample date.
 
 ## Random Forest Modelling 
 
-Random forest modelling was used to not only develop a predictive model of photic zone temperature, but also used as a means of variable selection and calculate relative variable importance.  Random forest is a machine learning method that builds a consensus prediction from the assemblage of multiple tree models (here specifically 10,000 trees for the final model and 1,000 trees for the variable selection models).  Each individual tree model is constructed from a subset of the full data set and a subset of all predictor variables.(ADD SENTENCE)  All random forest modelling was conducted in R v XXXX (CITE) with the randomForest package (CITE).  Model performance is reported as mean square error and adjusted R.  
+Random forest modelling was used to not only develop a predictive model of photic zone temperature, but also used as a means of variable selection and calculate relative variable importance.  Random forest is a machine learning method that builds a consensus prediction from the assemblage of multiple tree models (here specifically 10,000 trees for the final model and 1,000 trees for the variable selection models).  Each individual tree model is constructed from a subset of the full data set and a subset of all predictor variables.All random forest modelling was conducted in R v XXXX (CITE) with the randomForest package (CITE).  Model performance is reported as mean square error and adjusted R.  
 
 Random forest does not require that users reduce the number of predictor variables; the random forest algorithm prevents overfitting and is not impacted by correlated predictor variables (Culter 2007).  While it is unlikely that random forest models constructed with reduced numbers of predictor variables perform any better than models constructed with a full suite of available variables(Fox et al., 2017), reducing the number of our predictor variables was necessary in order to fulfill the long-term goals of this work.  Several of our climatic predictor variables are computationally intensive to create for the entire conterminous United States.  In order to use our final model for future forecasting or historical backcasting, we strove to create a robust predictive model while minimizing computational demands.  To determine the optimal number and set of variables, we followed the variable selection method presented in (Hollister 2016).
 
@@ -83,13 +94,13 @@ We used 1185 data points from the 2007 NLA and 1097 from 2012 NLA.  Figure 1 ill
 Figure 1
 
 
-Using the average temperature for the upper two meters as the response variable, we initially began the variable selection process with 16 predictor variables.   The variable selection process identified a reduced model with 7 variables (`r fig_num("varsel_fig",caption="Variable selection plot for all variables. Shows percent increase in mean square error as a function of the number of variables.", display = "cite")`). The selected variables were the average ambient air temperature for the sample date, sample date, longitude, average ambient air temperature for 30 day proceeding the sample date, elevation, latitude, length of lake shoreline, and the lake surface area. 
+Using the average temperature for the upper two meters as the response variable, we initially began the variable selection process with 16 predictor variables.   The variable selection process identified a reduced model with 7 variables (`r fig_num("varsel_fig",caption="Variable selection plot for all variables. Shows percent increase in mean square error as a function of the number of variables.", display = "cite")`). The selected variables were average ambient air temperature for the sample date, sample date, longitude, average ambient air temperature for 30 day proceeding the sample date, elevation, latitude, length of lake shoreline, and the lake surface area. 
 
 
 ![`r fig_num("varsel_fig")`](../figures/varselfig.jpg)
 
 
-The final model built with the eight selected variables has a mean-squared error of 2.19 and adjusted R^2 of 0.88.  The variables ranked in order of importance were date, average temperature, longitude, 30-day average temperature, elevation, latitude, surface area, and shoreline length (`r fig_num("varImpPlot",caption="Variable importance plot for selected variables.  Shows precent increase in mean square error. Higher values indicate a higher impact on overall model accuracy.", display = "cite")`).  The partial dependency plots illustrate how the predicted photic zone temperature changes over the range of values for all predictor variables (`r fig_num("partPlot",caption="Partial dependence plots for selected variables.", display = "cite")`).
+The final model built with the eight selected variables has a mean-squared error of 2.19 and adjusted R(n<sup>2</sup>) of 0.88.  The variables ranked in order of importance were date, average temperature, longitude, 30-day average temperature, elevation, latitude, surface area, and shoreline length (`r fig_num("varImpPlot",caption="Variable importance plot for selected variables.  Shows precent increase in mean square error. Higher values indicate a higher impact on overall model accuracy.", display = "cite")`).  The partial dependency plots illustrate how the predicted photic zone temperature changes over the range of values for all predictor variables (`r fig_num("partPlot",caption="Partial dependence plots for selected variables.", display = "cite")`).
 
 ![`r fig_num("varImpPlot")`](../figures/varImpPlot.jpg)
 
@@ -99,7 +110,7 @@ The final model built with the eight selected variables has a mean-squared error
 
 # Discussion and conclusions
 
-Here we present a simple yet robust model of lake photic zone temperature using the 2007 and 2012 NLA data for the conterminous United States. The final model has a mean square error of 2.19 and an adjusted R^2 of 0.88. The sampling date, that day’s average ambient air temperature, data obtained from the PRISM Climate Group, and longitude are the most important variables impacting the final model’s accuracy. Given the importance of temperature to a lake ecosystem, especially to cyanobacteria bloom dynamics, this model can be a valuable tool for researchers and lake resource managers. Daily predicted lake photic zone temperature for all lakes in the conterminous US can now be straightforwardly estimated based on basic ambient temperature and location information.
+Here we present a simple yet robust model of lake photic zone temperature using the 2007 and 2012 NLA data for the conterminous United States. The final model has a mean square error of 2.19 and an adjusted R(n<sup>2</sup>) of 0.88. The sampling date, that day’s average ambient air temperature, data obtained from the PRISM Climate Group, and longitude are the most important variables impacting the final model’s accuracy. Given the importance of temperature to a lake ecosystem, especially to cyanobacteria bloom dynamics, this model can be a valuable tool for researchers and lake resource managers. Daily predicted lake photic zone temperature for all lakes in the conterminous US can now be straightforwardly estimated based on basic ambient temperature and location information.
 
 Using only easily obtainable metrics to estimate lake temperature was a primary focus in the creation of this model.  Several studies (e.g. [@piccolroaz2018predictability]) have used similar metrics with good results (RMSE=0.5 °C) to estimate lake temperature but were applied to a single, or a small number of lakes.  Other studies have used more complex models (e.g. GLM) to yield good results (RMSE = 1.62 °C for the epilimnion) at varying scales [@bruce2018multi; @hipsey2019general].  However, these models require more complex input variables which are not available for all lakes and may be biased towards large lakes.  Using the NLA data and simple metrics allowed this model to be applicable to any lake within the conterminous United States using minimal input data with a small increase in RMSE.  Additionally, this model is predictive and the model and data will be made publicly available.  
 
