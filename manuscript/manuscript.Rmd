@@ -9,9 +9,9 @@ author:
 - '^\*^  *corresponding author: kreakie.betty@epa.gov*'
 bibliography: manuscript.bib
 output:
+  pdf_document: default
   word_document:
     reference_docx: manuscript_template.docx
-  pdf_document: default
 editor_options:
   chunk_output_type: inline
 csl: plos.csl
@@ -69,6 +69,7 @@ To summarize, the main goal of this work was to develop a simple yet robust lake
 ##Data
 We relied on the in situ temperature data provided in the US EPA’s National Lake Assessment (NLA) (CITE).  The NLA is a stratified random sample of lakes (great than 1 ha) across the United States.  NLA sampling took place in 2007, 2012, and 2017.  This research effort used the 2007 and 2012 sample years.  The 2017 data are currently undergoing quality control before being released the public.  Upon release, the data can easily be included to improve this model. For both sample years, we have included over 1,000 lakes across the conterminous US excluding the Great Lakes (Figure 1).  For each sampled lake, we used the mean temperature for all sampled depths of less than 2m (this being the depth typically considered the photic zone).  
 
+![`r fig_num("LakePhoticZonev2")`](../figures/LakePhoticZonev2.jpg)
 Figure 1: Map of 2007 and 2012 US EPA’s National Lake Assessment (NLA) Lakes
 
 We included numerous predictor variables that are hypothesized to impact lake photic zone. As a proxy for directly measured ambient air temperature, we used the PRISM AN81d dataset (PRISM Climate Group, Oregon State University, http://prism.oregonstate.edu, created 07 Nov 2018).  This dataset provides interpolated daily temperature estimates (mean, maximum, and minimum) for 4km grids in the conterminous United States for 1981 to the present (see: http://www.prism.oregonstate.edu/documents/PRISM_datasets.pdf).  PRISM takes advantage of measured climate variables to interpolate point data to spatially defined grids using regression techniques and expert knowledge (Daly et al 2008).  For our study, we used the “prism” R package (Hart & Bell) to download the mean daily temperatures for the PRISM grid cells corresponding to the centroids of all NLA lakes included in this study for dates between 01 May and 30 September of 2007 and 2012.

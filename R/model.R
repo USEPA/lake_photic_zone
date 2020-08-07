@@ -36,6 +36,13 @@ set.seed(42)
 RFAll <- randomForest(tmean_2m ~ ., data = nla_select, importance = TRUE,
                ntree = 10000)
 
+
+###Predict RF values for all points
+RFAll.predict<- predict(RFAll, data=nla_select[,2:9])
+RFAll.combined<-cbind(nla_select,RFAll.predict)
+write.csv(file="RFAlllPredict.csv",RFAll.combined)
+reg <- lm(RFAll.combined[,10]~RFAll.combined[,1], data = RFAll.combined)
+
 ## Calculate partial dependencies
 
 
