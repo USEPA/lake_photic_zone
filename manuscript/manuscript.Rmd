@@ -49,18 +49,17 @@ In spite of the need to understand near-surface temperature for all lakes across
 
 Our modelling effort takes advantage of the relatively recent availability of broad scale field data for lakes and uses the US Environmental Protection Agency’s (EPA’s) National Lake Assessment (NLA).  The NLA is a stratified random sample of all lakes in the conterminous United States repeated every five years beginning in 2007.  Even though this is a large effort involving numerous agencies, the sampling methods are standardized and have a comprehensive quality assurance plan.  The uniqueness of this data set allows us to build a robust lake photic zone temperature model for all US lakes.  By using lakes across the US (i.e. at a large spatial extent), we included lakes with different morphologies, in different climates with diverse geologies, and surrounding landscapes.  Additionally, small lakes were well represented with more than 50% of the lakes in the 2012 survey less than 0.5 km2. 
 
-The main goals of this work are to 1) develop a simple yet robust lake photic temperature model, 2) develop a model that is applicable to all lakes in the conterminous US that capture key drivers of near-surface lake temperature, and 3. Additionally, this work (something about open science and GitHub link).
-
-
-
+The main goals of this work are to 1) develop a simple yet robust lake photic zone temperature model and 2) develop a model that is applicable to all lakes in the conterminous US that capture key drivers of near-surface lake temperature.  Additionally, it is our practice conduct our work as openly as is feasible.  Towards that end we provide access to all code and data used to develop these models with the active repository available at <https://github.com/usepa/lake_photic_zone> and the code, data, and documents are archived at <https://link_to_zenodo_right_before_submission>. 
 
 # Methods
 
-##Data
-We relied on the in situ temperature data provided in the US EPA’s National Lake Assessment (NLA) (CITE).  The NLA is a stratified random sample of lakes (great than 1 ha) across the United States.  NLA sampling took place in 2007, 2012, and 2017.  This research effort used the 2007 and 2012 sample years.  The 2017 data are currently undergoing quality control before being released the public.  Upon release, the data can easily be included to improve this model. For both sample years, we have included over 1,000 lakes across the conterminous US excluding the Great Lakes (Figure 1).  For each sampled lake, we used the mean temperature for all sampled depths of less than 2m (this being the depth typically considered the photic zone).  
+## Data
 
-![`r fig_num("LakePhoticZonev2")`](../figures/LakePhoticZonev2.jpg)
-Figure 1: Map of 2007 and 2012 US EPA’s National Lake Assessment (NLA) Lakes
+We relied on the in situ temperature data provided in the US EPA’s National Lake Assessment [@usepa2016national; @usepa2009national].  The NLA is a stratified random sample of lakes (great than 1 ha) across the United States.  NLA sampling took place in 2007, 2012, and 2017.  This research effort used the 2007 and 2012 sample years.  The 2017 data are currently undergoing quality control before being released the public.  Upon release, the data can easily be included to improve this model. For both sample years, we have included over 1,000 lakes across the conterminous US excluding the Great Lakes (`r fig_num("LakePhoticZonev2", caption = "Map of 2007 and 2012 US EPA’s National Lake Assessment (NLA) Lakes", display = "cite")`).  For each sampled lake, we used the mean temperature for all sampled depths of less than 2m (this being the depth typically considered the photic zone).  
+
+![](../figures/LakePhoticZonev2.jpg)
+
+`r fig_num("LakePhoticZonev2")`
 
 We included numerous predictor variables that are hypothesized to impact lake photic zone. As a proxy for directly measured ambient air temperature, we used the PRISM AN81d dataset (PRISM Climate Group, Oregon State University, http://prism.oregonstate.edu, created 07 Nov 2018).  This dataset provides interpolated daily temperature estimates (mean, maximum, and minimum) for 4km grids in the conterminous United States for 1981 to the present (see: http://www.prism.oregonstate.edu/documents/PRISM_datasets.pdf).  PRISM takes advantage of measured climate variables to interpolate point data to spatially defined grids using regression techniques and expert knowledge (Daly et al 2008).  For our study, we used the “prism” R package (Hart & Bell) to download the mean daily temperatures for the PRISM grid cells corresponding to the centroids of all NLA lakes included in this study for dates between 01 May and 30 September of 2007 and 2012.
 
