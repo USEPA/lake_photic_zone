@@ -54,6 +54,8 @@ rf_all_trees <- mutate(rf_all_trees, rmse = apply(rf_all_trees, 1, function(x)
   sqrt(mean((as.numeric(x[3:length(x)]) - as.numeric(x[2]))^2))))
 rf_all_rmse <- select(rf_all_trees, nla_id, tmean_2m, rmse) %>%
   left_join(nla)
-#plot(density(rf_all_rmse$rmse))
-#peak <- rmse_dens$x[which.max(rmse_dens$y)]
-#abline(v = peak)
+rmse_dens <- density(rf_all_rmse$rmse)
+plot(rmse_dens)
+peak <- rmse_dens$x[which.max(rmse_dens$y)]
+abline(v = peak)
+abline(v = 1.5, col="Red")
