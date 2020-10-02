@@ -9,6 +9,7 @@ source(here::here("R/partial_plot.R"))
 library(ggplot2)
 library(hrbrthemes)
 library(readr)
+nla_select <- read_csv(here::here("data/nla_select.csv"))
 
 ###Variable selection figure 
 varsel_fig<-varsel_plot(var_sel_tmean)
@@ -72,5 +73,20 @@ pp_fig <- partial_plot(pp_data)
 ggsave(here::here("figures/partPlot.jpg"), pp_fig, width = 8, 
        height = 10, units = "in", dpi = 300)
 
+# Obs v Pred
+obs_v_pred_gg <- data.frame(observed = nla_select$tmean_2m, 
+                            predicted = RFAll$predicted) %>%
+  ggplot(aes(x = observed, y = predicted)) +
+  geom_point(alpha = 0.35) +
+  geom_abline(slope = 1, intercept = 0, size = 1.25, color = "darkblue") +
+  theme_ipsum_rc() +
+  scale_x_continuous(limits = c(8,38), breaks = seq(10, 35, 5)) +
+  scale_y_continuous(limits = c(8,38), breaks = seq(10, 35, 5)) +
+  labs(y = "Predicted photic zone temperature (°C)", 
+       x = "Measured photic zone temperature (°C)") +
+  theme(axis.title.x = element_text(size = 12, vjust = -1),
+        axis.title.y = element_text(size = 12, vjust = 4))
 
+ggsave(here::here("figures/obs_v_pred.jpg"), obs_v_pred_gg, width = 7.5, 
+                  height = 5.625, units = "in", dpi = 600)
 
