@@ -36,7 +36,7 @@ nla_select <- select(nla.all, nla_id, tmean_2m,var_sel_tmean$vars[[7]])
 write_csv(nla_select, here::here("data/nla_select.csv"))
 set.seed(42)
 RFAll <- randomForest(tmean_2m ~ ., data = nla_select[,-1], importance = TRUE,
-               ntree = 10000)
+               ntree = 10000, keep.inbag = TRUE)
 
 
 ###Predict RF values for all points
@@ -45,17 +45,34 @@ write.csv(file="RFAlllPredict.csv",RFAll.combined)
 reg <- lm(RFAll.combined[,11]~RFAll.combined[,2], data = RFAll.combined)
 
 ## Predict for all RF Trees
-rf_all_trees <- predict(RFAll, newdata = nla_select[,-1], predict.all = TRUE)
-rf_all_trees <- data.frame(rf_all_trees$individual)
+get_oob_predictions <- function(rf_obj, newdata){
+  if(!"inbag" %in% names(rf_obj)){stop("The in bag matrix is not present.  Try re-running random forest with keep.inbag = T.")}
+  rf_pred <- predict(rf_obj, newdata = newdata, predict.all = TRUE)
+  rf_inbag <- rf_obj$inbag
+  rf_inbag[rf_inbag != 0] <- NA
+  rf_pred$individual + rf_inbag
+} 
+
+rf_all_trees <- get_oob_predictions(RFAll, newdata = nla_select[,-1])
+
+rf_all_trees <- data.frame(rf_all_trees)
 rf_all_trees <- mutate(rf_all_trees, nla_id = nla_select$nla_id, 
                        tmean_2m = nla_select$tmean_2m)
 rf_all_trees <- select(rf_all_trees, nla_id, tmean_2m, everything())
-rf_all_trees <- mutate(rf_all_trees, rmse = apply(rf_all_trees, 1, function(x) 
-  sqrt(mean((as.numeric(x[3:length(x)]) - as.numeric(x[2]))^2))))
+rf_all_trees <- mutate(rf_all_trees, rmse = apply(rf_all_trees[,-1], 1, function(x) 
+  sqrt(mean((x[2:length(x)] - x[1])^2, na.rm = TRUE))))
 rf_all_rmse <- select(rf_all_trees, nla_id, tmean_2m, rmse) %>%
   left_join(nla)
 rmse_dens <- density(rf_all_rmse$rmse)
-plot(rmse_dens)
+#plot(rmse_dens)
 peak <- rmse_dens$x[which.max(rmse_dens$y)]
-abline(v = peak)
-abline(v = 1.5, col="Red")
+#abline(v = peak)
+#abline(v = mean(rf_all_rmse$rmse), col="Red")
+plot_dens <- function(row){
+  row_dens <- density(na.omit(as.numeric(rf_all_trees[row,3:10002])))
+  plot(row_dens)
+  abline(v = row_dens$x[which.max(row_dens$y)])
+  abline(v = mean(na.omit(as.numeric(rf_all_trees[row,3:10002]))), col = "red")
+  abline(v = rf_all_trees$tmean_2m[row], col = "blue")
+}
+#plot_dens(4)
