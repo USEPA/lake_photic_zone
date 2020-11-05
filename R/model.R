@@ -34,6 +34,7 @@ var_sel_tmean <- varsel_regression_rf(nla.all[,-1]$tmean_2m, select(nla.all[,-1]
 
 nla_select <- select(nla.all, nla_id, tmean_2m,var_sel_tmean$vars[[7]])
 write_csv(nla_select, here::here("data/nla_select.csv"))
+#nla_select <- read_csv(here::here("data/nla_select.csv"))
 set.seed(42)
 RFAll <- randomForest(tmean_2m ~ ., data = nla_select[,-1], importance = TRUE,
                ntree = 10000, keep.inbag = TRUE)
@@ -59,10 +60,20 @@ rf_all_trees <- data.frame(rf_all_trees)
 rf_all_trees <- mutate(rf_all_trees, nla_id = nla_select$nla_id, 
                        tmean_2m = nla_select$tmean_2m)
 rf_all_trees <- select(rf_all_trees, nla_id, tmean_2m, everything())
-rf_all_trees <- mutate(rf_all_trees, rmse = apply(rf_all_trees[,-1], 1, function(x) 
-  sqrt(mean((x[2:length(x)] - x[1])^2, na.rm = TRUE))))
-rf_all_rmse <- select(rf_all_trees, nla_id, tmean_2m, rmse) %>%
+rf_all_trees <- mutate(rf_all_trees, 
+                       mean_pred = apply(rf_all_trees[,-1], 1, 
+                                         function(x) mean(x[2:length(x)], 
+                                                               na.rm = TRUE)),
+                       rmse = apply(rf_all_trees[,-1], 1, 
+                                    function(x) sqrt(mean((x[2:length(x)] - 
+                                                             x[1])^2, 
+                                                          na.rm = TRUE))),
+                       mdev = apply(rf_all_trees[,-1], 1, 
+                                    function(x) mean(x[2:length(x)] - 
+                                                       x[1], na.rm = TRUE)))
+rf_all_rmse <- select(rf_all_trees, nla_id, tmean_2m, rmse, mdev, mean_pred) %>%
   left_join(nla)
+write_csv(rf_all_rmse, here::here("data/rf_all_tree_rmse.csv"))
 rmse_dens <- density(rf_all_rmse$rmse)
 #plot(rmse_dens)
 peak <- rmse_dens$x[which.max(rmse_dens$y)]
