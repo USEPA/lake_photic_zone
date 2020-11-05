@@ -9,6 +9,11 @@ source(here::here("R/partial_plot.R"))
 library(ggplot2)
 library(hrbrthemes)
 library(readr)
+library(dplyr)
+library(sf)
+library(USAboundaries)
+library(colorspace)
+
 nla_select <- read_csv(here::here("data/nla_select.csv"))
 
 ###Variable selection figure 
@@ -90,3 +95,59 @@ obs_v_pred_gg <- data.frame(observed = nla_select$tmean_2m,
 ggsave(here::here("figures/obs_v_pred.jpg"), obs_v_pred_gg, width = 7.5, 
                   height = 5.625, units = "in", dpi = 600)
 
+
+# Map of prediction error
+# Note that mdev is equivalent to predicted - observed, so some unecesary code
+# here.
+temp_error_data <- read_csv(here::here("data/rf_all_tree_rmse.csv")) %>%
+  select(nla_id, rmse, mdev, longitude, latitude, year) %>%
+  mutate(error_class = case_when(mdev >= -1 & mdev <= 1 ~
+                                   "-1 - 1",
+                                 mdev > 1 & mdev <= 2 ~
+                                   "1 - 2",
+                                 mdev > 2 & mdev <= 3 ~
+                                   "2 - 3",
+                                 mdev > 3 ~
+                                   "> 3",
+                                 mdev < -1 & mdev >= -2 ~
+                                   "-1 - -2",
+                                 mdev < -2 & mdev >= -3 ~
+                                   "-2 - -3",
+                                 mdev < -3 ~
+                                   "< -3",
+                                 TRUE ~ "")) %>%
+  mutate(error_class = factor(error_class, levels = c("> 3", "2 - 3", "1 - 2", "-1 - 1", "-1 - -2", "-2 - -3", "< -3"), ordered = TRUE)) %>%
+  st_as_sf(coords = c("longitude", "latitude"), crs = 4326) %>%
+  st_transform(crs = 5072)
+
+usa <- us_states() %>%
+  filter(!state_abbr %in% c("AK", "HI", "PR")) %>%
+  st_transform(crs = 5072)
+
+col <- diverging_hcl(n = 7, h = c(260, 0), c = 80, l = c(30, 90), power = 1.5)
+col <- col[length(col):1]
+error_map_gg <- ggplot(usa) +
+  #geom_sf(data = temp_error_data, aes(color = error_class), size = 2) +
+  geom_sf(data = temp_error_data, aes(color = error_class, size = error_class), alpha = 0.5) +
+  geom_sf(fill = NA, size = 0.65) +
+  scale_color_manual(values = col, name = "Error (°C)") +
+  scale_size_manual(values = c(2.5, 1.75 , 1, 0.25, 1, 1.75, 2.5), name = "Error (°C)") +
+  theme_ipsum_rc() +
+  theme(legend.position = "bottom") +
+  guides(col = guide_legend(nrow = 1, byrow = TRUE))
+ggsave(here::here("figures/error_map.jpg"), error_map_gg, width = 7.5, 
+       height = 5.625, units = "in", dpi = 600)
+
+nla_map_gg <- ggplot(usa) + 
+  geom_sf(data = temp_error_data, aes(color = as.factor(year), 
+                                      shape = as.factor(year)), alpha = 0.6) +
+  geom_sf(fill = NA, size = 0.65) +
+  scale_color_manual(values = c("darkblue", "darkred"), name = "Year") +
+  scale_shape_manual(values = c(16,17), name = "Year") +
+  theme_ipsum_rc() +
+  theme(legend.position = "bottom") +
+  guides(col = guide_legend(nrow = 1, byrow = TRUE))
+ggsave(here::here("figures/nla_map.jpg"), nla_map_gg, width = 7.5, 
+       height = 5.625, units = "in", dpi = 600)
+  
+  
