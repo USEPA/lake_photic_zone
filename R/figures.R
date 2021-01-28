@@ -3,9 +3,9 @@
 source(here::here("R/varsel_plot.R"))
 source(here::here("R/varimp_plot.R"))
 source(here::here("R/partial_plot.R"))
-#source(here::here("R/model.R"))
+source(here::here("R/model.R"))
 
-#extrafont::loadfonts(device="win")
+extrafont::loadfonts(device="win")
 library(ggplot2)
 library(hrbrthemes)
 library(readr)
@@ -13,6 +13,7 @@ library(dplyr)
 library(sf)
 library(USAboundaries)
 library(colorspace)
+library(classInt)
 
 nla_select <- read_csv(here::here("data/nla_select.csv"))
 
@@ -80,7 +81,10 @@ ggsave(here::here("figures/partPlot.jpg"), pp_fig, width = 8,
 
 # Obs v Pred
 obs_v_pred_gg <- data.frame(observed = nla_select$tmean_2m, 
-                            predicted = RFAll$predicted) %>%
+                            predicted = RFAll$predicted,
+                            area = nla_select$Surface.Area) %>%
+  mutate(area_class = case_when(area <= quantile(area, 0.75) ~ "class_1", 
+                                area > quantile(area, 0.75) ~ "class_2")) %>%
   ggplot(aes(x = observed, y = predicted)) +
   geom_point(alpha = 0.35) +
   geom_abline(slope = 1, intercept = 0, size = 1.25, color = "darkblue") +
@@ -100,7 +104,7 @@ ggsave(here::here("figures/obs_v_pred.jpg"), obs_v_pred_gg, width = 7.5,
 # Note that mdev is equivalent to predicted - observed, so some unecesary code
 # here.
 temp_error_data <- read_csv(here::here("data/rf_all_tree_rmse.csv")) %>%
-  select(nla_id, rmse, mdev, longitude, latitude, year) %>%
+  select(nla_id, rmse, mdev, longitude, latitude, year, surface_area) %>%
   mutate(error_class = case_when(mdev >= -1 & mdev <= 1 ~
                                    "-1 - 1",
                                  mdev > 1 & mdev <= 2 ~
