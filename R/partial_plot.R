@@ -6,7 +6,8 @@
 #' @param partial_data an data frame with partial dependency calcs and variable names
 #'              
 partial_plot <- function(partial_data){
-  partial_data$variable <- factor(partial_data$variable, labels = c("Date", "Avg. temperature (°C)", "Longitude (decimal degrees)", "30-day avg. temperature (°C)", "Elevation (m)", "Latitude (decimal degrees)", "Lake area (m²)", "Lake shoreline length (m)"))
+  
+  partial_data$variable <- factor(partial_data$variable, labels = c("Day of the year", "Avg. temperature (degrees C)", "Longitude (decimal degrees)", "30-day avg. temperature (degrees C)", "Elevation (meters)", "Latitude (decimal degrees)", "Lake area (meters squared)", "Lake shoreline length (meters)"))
   part_plot <- partial_data %>%
     ggplot(aes(x = x, y = y)) +
     geom_line() +
