@@ -7,13 +7,22 @@
 #'              
 partial_plot <- function(partial_data){
   
-  partial_data$variable <- factor(partial_data$variable, labels = c("Day of the year", "Avg. temperature (degrees C)", "Longitude (decimal degrees)", "30-day avg. temperature (degrees C)", "Elevation (meters)", "Latitude (decimal degrees)", "Lake area (meters squared)", "Lake shoreline length (meters)"))
+  partial_data$variable <- factor(partial_data$variable, 
+                                  labels = c("Day~of~the~year", 
+                                             expression("Avg.~temperature~( degree*C)"), 
+                                             "Longitude~(decimal~degrees)", 
+                                             expression("30-day~avg.~temperature~( degree*C)"), 
+                                             "Elevation~(m)", 
+                                             "Latitude~(decimal~degrees)", 
+                                             expression("Lake~area~(m^2)"), 
+                                             "Lake~shoreline~length~(m)"))
   part_plot <- partial_data %>%
     ggplot(aes(x = x, y = y)) +
     geom_line() +
     facet_wrap(variable ~ ., ncol = 2, 
                scales = "free_x", 
-               strip.position = "bottom") +
+               strip.position = "bottom",
+               labeller = label_parsed) +
     theme_ipsum_rc(base_size = 12, axis_text_size = 10, axis_title_size = 10) +
     theme(axis.title.y=element_blank(),
           title = element_blank(), strip.placement = "outside")
