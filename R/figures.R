@@ -25,9 +25,9 @@ ggsave(here::here("figures/varSelFig.jpg"), varsel_fig, width = 7.5,
 
 
 ###Variable importance figure
-variable_names <- c("Avg. temperature", "Date", "Longitude", 
-                    "30-day avg. temperature", "Elevation", "Latitude", 
-                    "Lake shoreline length", "Lake area")
+variable_names <- c("Avg. temperature (°C)", "Date", "Longitude (Dec. Degrees)", 
+                    "30-day avg. temperature (°C)", "Elevation (m)", "Latitude (Dec. Degrees)", 
+                    "Lake shoreline length (m)", "Lake area (m²)")
 varimp_fig <- varimp_plot(RFAll, variable_names)
 #varimp_fig
 ggsave(here::here("figures/varImpPlot.jpg"), varimp_fig, width = 7.5, 
@@ -72,7 +72,13 @@ pp_data <- pp_data %>%
                                                 "30-day avg. temperature",
                                                 "Elevation", "Latitude",
                                                 "Lake area", 
-                                                "Lake shoreline length")))
+                                                "Lake shoreline length"),
+                           labels = c("Date", "Avg. temperature (°C)",
+                                      "Longitude (Dec. Degrees)", 
+                                      "30-day avg. temperature (°C)",
+                                      "Elevation (m)", "Latitude (Dec. Degrees)",
+                                      "Lake area (m²)", 
+                                      "Lake shoreline length (m)")))
 
 pp_fig <- partial_plot(pp_data)
 #pp_fig
