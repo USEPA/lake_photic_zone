@@ -1,21 +1,20 @@
 ---
-title: "**Title:** Lake Photic Zone Temperature across the Conterminous United States"
+title: "**Title:** Predictive Model of Lake Photic Zone Temperature across the Conterminous United States"
 author:
-- ^*1*^ US Environmental Protection Agency, Office of Research and Development,  Atlantic
-  Coastal Environmental Sciences Division (ACESD), Narragansett, RI 02882
+-'**Authors:** Kreakie, B. J. ^\*^ ^*1*^,  Shivers, S. ^*1*^, Hollister. J. W. ^*1*^, Milstead, W.B.'^\*^ 
+- ^*1*^ US Environmental Protection Agency, Office of Research and Development,  Atlantic Coastal Environmental Sciences Division (ACESD), Narragansett, RI 02882
+ 
 
-- '**Authors:** Kreakie, B. J. ^\*^ ^*1*^,  Shivers, S. ^*1*^, Hollister. J. W. ^*1*^, Milstead,
-  W. Bryan. ^*1*^'
-- '^\*^  *corresponding author: kreakie.betty@epa.gov*'
+'**corresponding author: kreakie.betty@epa.gov*'
 bibliography: manuscript.bib
 output:
+  pdf_document: default
   word_document:
     reference_docx: manuscript_template_submission.docx
-  pdf_document: default
 csl: ecology.csl
 abstract: |
-  | **Abstract:** As the average global air temperature on Earth increases, surface temperatures of lakes are also increasing globally (0.34 °C per decade from 1985 to 2009).  The influence of this increased temperature is known to impact lentic ecosystems across local to broad scales.  For example, warming lake temperature is linked to disruptions in trophic linkages, changes in thermal stratification, and cyanobacteria bloom dynamics. Thus understanding broad trends in lake temperature is important to understanding the changing ecology of lakes and the potential human health impacts of these changes.  To help address this, we developed a simple yet robust model of lake photic zone temperature using the 2007 and 2012 US EPA’s National Lakes Assessment data for the conterminous United States. The final model has a root mean square error of 1.48 °C and an adjusted R^2^ of 0.88. The sampling date, that day’s average ambient air temperature, data obtained from the PRISM Climate Group, and longitude are the most important variables impacting the final model’s accuracy. Given the importance of temperature to a lake ecosystem, this model can be a valuable tool for researchers and lake resource managers. Daily predicted lake photic zone temperature for all lakes in the conterminous US can now be estimated based on basic ambient temperature and location information.
-  | **Keywords:** random forest, National Lakes Assessment, limnology, water temperature, warming lakes
+  | **Abstract:** As the average global air temperature increases, lake surface temperatures are also increasing globally. The influence of this increased temperature is known to impact lake ecosystems across local to broad scales. Warming lake temperature is linked to disruptions in trophic linkages, changes in thermal stratification, and cyanobacteria bloom dynamics. Thus, comprehending broad trends in lake temperature is important to understanding the changing ecology of lakes and the potential human health impacts of these changes. To help address this, we developed a simple yet robust random forest model of lake photic zone temperature using the 2007 and 2012 United States Environmental Protection Agency’s National Lakes Assessment data for the conterminous United States. The final model has a root mean square error of 1.48 °C and an adjusted R^^2^^ of 0.88; the final model included 2,282 total samples. The sampling date, that day’s average ambient air temperature and longitude are the most important variables impacting the final model’s accuracy.  The final model also included 30-day average temperature, elevation, latitude, lake area, and lake shoreline length.  Given the importance of temperature to a lake ecosystem, this model can be a valuable tool for researchers and lake resource managers. Daily predicted lake photic zone temperature for all lakes in the conterminous US can now be estimated based on basic ambient temperature and location information..
+  | **Keywords:** random forest, National Lakes Assessment, limnology, water temperature, warming lakes, photic zone temperature
 ---
 
 
