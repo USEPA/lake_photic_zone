@@ -14,6 +14,7 @@ library(sf)
 library(USAboundaries)
 library(colorspace)
 library(classInt)
+library(tidyr)
 
 nla_select <- read_csv(here::here("data/nla_select.csv"))
 
@@ -159,5 +160,8 @@ nla_map_gg <- ggplot(usa) +
   guides(col = guide_legend(nrow = 1, byrow = TRUE))
 ggsave(here::here("figures/nla_map.jpg"), nla_map_gg, width = 7.5, 
        height = 5.625, units = "in", dpi = 600)
-  
+
+
+
+
   

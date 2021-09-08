@@ -72,7 +72,8 @@ rf_all_trees <- mutate(rf_all_trees,
                                     function(x) mean(x[2:length(x)] - 
                                                        x[1], na.rm = TRUE)))
 rf_all_rmse <- select(rf_all_trees, nla_id, tmean_2m, rmse, mdev, mean_pred) %>%
-  left_join(nla)
+  left_join(nla) %>%
+  mutate(tmean_2m_rf_pred = RFAll$predicted)
 write_csv(rf_all_rmse, here::here("data/rf_all_tree_rmse.csv"))
 rmse_dens <- density(rf_all_rmse$rmse)
 #plot(rmse_dens)
