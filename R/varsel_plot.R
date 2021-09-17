@@ -8,10 +8,10 @@
 varsel_plot <- function(vs_reg_obj){
   dat <- data.frame(num = unlist(vs_reg_obj$num_var), mse = unlist(vs_reg_obj$mse))
   
-  plot_out<-ggplot(dat, aes(x=num,y=mse)) +
+  plot_out<-ggplot(dat, aes(x=num,y=sqrt(mse))) +
     geom_point(size = 3) +
     theme_ipsum_rc(base_size = 12, axis_title_size = 12) +
-    labs(x="Number of variables in model", y="Root Mean Square Error") +
+    labs(x="Number of variables in model", y="Root Mean Square Error (°C)") +
     theme(axis.title.y = element_text(margin = ggplot2::margin(t = 0, r = 0.3, b = 0, 
                                                       l = 0, "cm")),
           axis.title.x = element_text(margin = ggplot2::margin(t = 0.3, r = 0, b = 0, 

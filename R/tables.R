@@ -4,6 +4,7 @@ library(dplyr)
 library(tidyr)
 library(officer)
 library(flextable)
+library(lubridate)
 
 var_dat <- read_csv(here::here("data/rf_all_tree_rmse.csv")) %>%
   mutate(error = tmean_2m - tmean_2m_rf_pred,
@@ -19,12 +20,12 @@ var_dat <- read_csv(here::here("data/rf_all_tree_rmse.csv")) %>%
 
 var_summary <- var_dat %>%
   group_by(variable) %>%
-  summarize(min = min(value, na.rm = TRUE),
+  summarize("Min." = min(value, na.rm = TRUE),
             "25th" = quantile(value, 0.25, na.rm = TRUE),
-            median = median(value, na.rm = TRUE),
-            mean = mean(value, na.rm = TRUE),
+            "Median" = median(value, na.rm = TRUE),
+            "Mean" = mean(value, na.rm = TRUE),
             "75th" = quantile(value, 0.75, na.rm = TRUE),
-            max = max(value, na.rm = TRUE)) %>%
+            "Max" = max(value, na.rm = TRUE)) %>%
   mutate_if(is.numeric, round, 2) %>%
   mutate(variable = factor(variable, labels = c("Date (Day of year)", 
                                                 "Elevation (meters)",

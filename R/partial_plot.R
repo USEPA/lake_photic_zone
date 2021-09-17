@@ -23,8 +23,9 @@ partial_plot <- function(partial_data){
                scales = "free_x", 
                strip.position = "bottom",
                labeller = label_parsed) +
-    theme_ipsum_rc(base_size = 12, axis_text_size = 10, axis_title_size = 10) +
-    theme(axis.title.y=element_blank(),
-          title = element_blank(), strip.placement = "outside")
+    theme_ipsum_rc(base_size = 12, axis_text_size = 10, axis_title_size = 12) +
+    theme(axis.title.y=element_text(vjust = 5, hjust = 0.5),
+          title = element_blank(), strip.placement = "outside") +
+    labs(y = expression(paste("Temperature (", degree~C, ")")))
  part_plot
 }
